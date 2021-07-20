@@ -86,6 +86,17 @@ def q6064():
     a = map(int, input().split())
     print(min(a))
 
+def q6079():
+    a = int(input())
+    res = 0
+    i = 1
+    while res < a:
+        res+=i
+        i+=1
+    print(i-1)
+
+    pass
+
 def q6078():
     while True:
         a = input()
@@ -150,7 +161,6 @@ def q6085():
     res /= (8 * 1024 ** 2) # mb
     print(f'{res:.2f} MB') # 알아서 반올림 해줌
 
-
 def q6086():
     a = int(input())
     res = 0
@@ -175,7 +185,6 @@ def q6089():
     for _ in range(n-1):
         a *= d
     print(a)
-
 
 def q6090():
     a, m, d, n = map(int, input().split())
@@ -210,7 +219,6 @@ def q6092():
     for i in map(int, input().split()):
         res[i-1] +=1
     print(' '.join(map(str,res)))
-
 
 def q6093():
     n = int(input())
@@ -257,5 +265,38 @@ def q6097():
     for i in a:
         print(' '.join(i))
 
-    pass
-q6097()
+def q6098():
+    a = [ input().split() for _ in range(10) ]
+    start_x, start_y = 1, 1
+    
+    def move_right(x, y):
+        while a[x][y] != '1':
+            if a[x][y] == '2': 
+                a[x][y] = '9'
+                return None, None
+            # elif a[x][y] == '0': a[x][y] = '9'
+            else: 
+                a[x][y] = '9'
+            y += 1
+        y -= 1
+        x, y = move_down(x,y)
+        if x is None: 
+            return
+        else:
+            move_right(x, y)
+
+    def move_down(x,y):
+        while a[x][y+1] == '1':
+            if a[x][y] == '2': 
+                a[x][y] = '9'
+                return None, None
+            else:
+                a[x][y] = '9'
+            x+=1
+            if x == 9: return None, None # 테두리에 닿았다면 끝.
+        return x, y
+    
+    move_right(start_x, start_y)
+    
+    for i in a:
+        print(' '.join(i))
